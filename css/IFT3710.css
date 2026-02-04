@@ -44,6 +44,7 @@
 
 .name {
     font-weight: 600;
+    color: rgb(0, 0, 0);
 }
 
 .id {
@@ -70,3 +71,26 @@
 }
 
 }
+
+.description .section .content {
+    padding: 1rem 0;
+}
+
+.description .section .toggle {
+    width: 100%;
+    text-align: left;
+    background: rgb(241, 241, 241);
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+}
+
+.description .section .toggle.active {
+    background-color: rgb(231, 168, 166); 
+    font-weight: bold;                     
+}
+
+
+
+
