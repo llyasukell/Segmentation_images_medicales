@@ -1,0 +1,8 @@
+nibabel
+napari
+numpy
+matplotlib
+ipywidgets
+pandas
+jupyter
+ipykernel

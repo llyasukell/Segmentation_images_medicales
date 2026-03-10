@@ -1,5 +1,12 @@
+# Environnements
 .venv/
 __pycache__/
 *.pyc
 .DS_Store
-data/heart
+
+# Data
+data/
+nnunet_data/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/

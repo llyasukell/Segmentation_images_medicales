@@ -12,4 +12,31 @@ Ce projet porte sur le problème de la segmentation d'images médicales 3D, c'es
 
 ---
 
+## Structure du projet
+
+```
+project/
+├── preprocessing/          # conversion des données
+│   └── convert_to_nnunet.py
+├── utils/                  # acripts utilitaires réutilisables
+│   └── visualize.ipynb
+├── configs/                # paramètres nnU-Net 
+├── training/               # scripts de lancement des folds
+├── evaluation/             # inférence, Dice, visualisations
+├── results/
+│   ├── figures/            # PNG des visualisations
+│   └── scores.csv          # Scores Dice par cas
+├── report/                 # rapport final
+│   └── IFT3710.html
+└── data/                   # Données brutes (gitignored)
+
+```
+
+---
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
 
