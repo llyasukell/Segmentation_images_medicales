@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import os
 
-PATH_BASE = "../data/heart/Task02_Heart/"
+PATH_BASE = os.path.join("..", "data", "heart", "Task02_Heart")
 PATH_JSON = os.path.join(PATH_BASE, "dataset.json")
 PATH_IMAGES = os.path.join(PATH_BASE, "imagesTr/")
 
@@ -38,5 +38,7 @@ data["training"] = renommage(train_df).to_dict(orient="records")
 
 with open(PATH_JSON, "w") as f:
     json.dump(data, f, indent=4)
+
+Print("Fini")
 
 
