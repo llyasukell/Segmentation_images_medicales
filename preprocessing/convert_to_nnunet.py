@@ -2,12 +2,8 @@ import json
 import os
 import pandas as pd
 
-PATH_BASE = os.path.join("..", "data", "heart", "Task02_Heart")
-PATH_JSON = os.path.join(PATH_BASE, "dataset.json")
-IMAGES_TR_DIR = os.path.join(PATH_BASE, "imagesTr")
-IMAGES_TS_DIR = os.path.join(PATH_BASE, "imagesTs")
 
-def renommage(training):
+def renommage(training, chemin_tr):
     t = training.copy()
     for index, row in t.iterrows():
         nom_fichier_brut = os.path.basename(row["image"])
@@ -15,8 +11,8 @@ def renommage(training):
             t.at[index, "image"] = "./imagesTr/" + nom_fichier_brut
             continue
         nom_fichier_neuf = nom_fichier_brut.replace(".nii.gz", "_0000.nii.gz")
-        chemin_ancien = os.path.join(IMAGES_TR_DIR, nom_fichier_brut)
-        chemin_nouveau = os.path.join(IMAGES_TR_DIR, nom_fichier_neuf)
+        chemin_ancien = os.path.join(chemin_tr, nom_fichier_brut)
+        chemin_nouveau = os.path.join(chemin_tr, nom_fichier_neuf)
         chemin_json_nouveau = "./imagesTr/" + nom_fichier_neuf
         if os.path.exists(chemin_ancien):
             os.rename(chemin_ancien, chemin_nouveau)
@@ -26,7 +22,7 @@ def renommage(training):
         t.at[index, "image"] = chemin_json_nouveau
     return t
 
-def renommage_test(test_list):
+def renommage_test(test_list, chemin_ts):
     updated = []
     for image_path in test_list:
         nom_fichier_brut = os.path.basename(image_path)
@@ -34,8 +30,8 @@ def renommage_test(test_list):
             updated.append("./imagesTs/" + nom_fichier_brut)
             continue
         nom_fichier_neuf = nom_fichier_brut.replace(".nii.gz", "_0000.nii.gz")
-        chemin_ancien = os.path.join(IMAGES_TS_DIR, nom_fichier_brut)
-        chemin_nouveau = os.path.join(IMAGES_TS_DIR, nom_fichier_neuf)
+        chemin_ancien = os.path.join(chemin_ts, nom_fichier_brut)
+        chemin_nouveau = os.path.join(chemin_ts, nom_fichier_neuf)
         if os.path.exists(chemin_ancien):
             os.rename(chemin_ancien, chemin_nouveau)
             print(f"OK Test : {nom_fichier_brut} -> {nom_fichier_neuf}")
@@ -44,17 +40,8 @@ def renommage_test(test_list):
         updated.append("./imagesTs/" + nom_fichier_neuf)
     return updated
 
-with open(PATH_JSON, "r", encoding="utf-8") as f:
-    data = json.load(f)
 
-train_df = pd.DataFrame(data["training"])
-data["training"] = renommage(train_df).to_dict(orient="records")
-data["test"] = renommage_test(data.get("test", []))
 
-with open(PATH_JSON, "w", encoding="utf-8") as f:
-    json.dump(data, f, indent=4)
-
-print("Fini")
 
 
 
@@ -192,6 +179,7 @@ def process_test_case(task_dir: str, test_image_rel: str, out_images_ts_dir: str
 
 
 def main() -> None:
+    
     parser = argparse.ArgumentParser(description="Crop Decathlon Heart data to nonzero region.")
     parser.add_argument("--task-dir", default="data/heart/Task02_Heart", help="Task02_Heart directory")
     parser.add_argument("--dataset-json", default="dataset.json", help="Dataset JSON filename under task-dir")
@@ -202,9 +190,31 @@ def main() -> None:
     parser.add_argument("--report-json", default="crop_report.json", help="Crop report filename under task-dir")
     args = parser.parse_args()
 
+
+
+
+
     task_dir = args.task_dir
-    dataset_json_path = os.path.join(task_dir, args.dataset_json)
-    data = load_dataset_json(dataset_json_path)
+    json_path = os.path.join(task_dir, args.dataset_json)
+
+    #renommage
+    with open(json_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    tr_dir = os.path.join(task_dir, "imagesTr")
+    ts_dir = os.path.join(task_dir, "imagesTs")
+
+    train_df = pd.DataFrame(data["training"])
+    data["training"] = renommage(train_df, tr_dir).to_dict(orient="records")
+    data["test"] = renommage_test(data.get("test", []), ts_dir)
+
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+
+
+    print("Fichier renommé")
+
+
 
     out_images_tr = os.path.join(task_dir, args.images_tr_out)
     out_labels_tr = os.path.join(task_dir, args.labels_tr_out)
