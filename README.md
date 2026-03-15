@@ -34,9 +34,26 @@ project/
 
 ---
 
-## Installation
+# Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
+# Utilisation et Environnement
+
+Pour configurer les variables d'environnement nécessaires à nnU-Net et activer l'environnement :
+## Sur Windows
+Lance le script : setup_env.bat
+
+## Sur Linux
+Dans le terminal :
+Bash
+export nnUNet_raw="./nnUNet_raw"
+export nnUNet_preprocessed="./nnUNet_preprocessed"
+export nnUNet_results="./nnUNet_results"
+
+## Dans les deux cas pour lancer l'entraînement et créer les données :
+        Exécute la conversion : python preprocessing/convert_to_nnunet.py
+        Lance la normalisation : nnUNetv2_plan_and_preprocess -d 2 --verify_dataset_integrity
+        Lancer l'entraînement : nnUNetv2_train 2 3d_fullres 0
