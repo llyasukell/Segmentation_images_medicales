@@ -8,5 +8,10 @@ __pycache__/
 data/
 nnunet_data/
 
+nnUNet_raw/
+nnUNet_preprocessed/
+nnUNet_results/
+
+
 # Jupyter checkpoints
 .ipynb_checkpoints/

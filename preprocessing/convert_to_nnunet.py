@@ -136,7 +136,8 @@ def process_training_case(task_dir: str, item: Dict[str, str], out_images_dir: s
     cropped_lbl = apply_crop(label_data, box)
 
     image_name = os.path.basename(image_abs)
-    label_name = os.path.basename(label_abs)
+
+    label_name = os.path.basename(label_abs).replace("_0000.nii.gz", ".nii.gz")
     out_image_abs = os.path.join(out_images_dir, image_name)
     out_label_abs = os.path.join(out_labels_dir, label_name)
 
@@ -180,18 +181,20 @@ def process_test_case(task_dir: str, test_image_rel: str, out_images_ts_dir: str
 
 def main() -> None:
     
-    parser = argparse.ArgumentParser(description="Crop Decathlon Heart data to nonzero region.")
+    parser = argparse.ArgumentParser(description="Crop Decathlon Heart data to nnU-Net format.")
     parser.add_argument("--task-dir", default="data/heart/Task02_Heart", help="Task02_Heart directory")
     parser.add_argument("--dataset-json", default="dataset.json", help="Dataset JSON filename under task-dir")
-    parser.add_argument("--images-tr-out", default="imagesTr_cropped", help="Output folder for cropped training images")
-    parser.add_argument("--labels-tr-out", default="labelsTr_cropped", help="Output folder for cropped training labels")
-    parser.add_argument("--images-ts-out", default="imagesTs_cropped", help="Output folder for cropped test images")
-    parser.add_argument("--output-json", default="dataset_cropped.json", help="Output JSON filename under task-dir")
+    
+    # Chemins de sortie 
+    parser.add_argument("--images-tr-out", default="nnUNet_raw/Dataset002_Heart/imagesTr", help="Output for training images")
+    parser.add_argument("--labels-tr-out", default="nnUNet_raw/Dataset002_Heart/labelsTr", help="Output for training labels")
+    parser.add_argument("--images-ts-out", default="nnUNet_raw/Dataset002_Heart/imagesTs", help="Output for test images")
+    parser.add_argument("--output-json", default="nnUNet_raw/Dataset002_Heart/dataset.json", help="Final dataset json")
     parser.add_argument("--report-json", default="crop_report.json", help="Crop report filename under task-dir")
     args = parser.parse_args()
-
-
-
+    out_images_tr = args.images_tr_out
+    out_labels_tr = args.labels_tr_out
+    out_images_ts = args.images_ts_out
 
 
     task_dir = args.task_dir
@@ -216,9 +219,6 @@ def main() -> None:
 
 
 
-    out_images_tr = os.path.join(task_dir, args.images_tr_out)
-    out_labels_tr = os.path.join(task_dir, args.labels_tr_out)
-    out_images_ts = os.path.join(task_dir, args.images_ts_out)
 
     os.makedirs(out_images_tr, exist_ok=True)
     os.makedirs(out_labels_tr, exist_ok=True)
@@ -242,13 +242,13 @@ def main() -> None:
     out_data["training"] = new_training
     out_data["test"] = new_test
 
-    output_json_path = os.path.join(task_dir, args.output_json)
+    output_json_path = args.output_json
     report_json_path = os.path.join(task_dir, args.report_json)
 
     write_dataset_json(out_data, output_json_path)
     write_dataset_json({"training": training_report, "test": test_report}, report_json_path)
 
-    print(f"Wrote cropped dataset json: {output_json_path}")
+    print(f"Wrote cropped dataset json: {os.path.abspath(output_json_path)}")
     print(f"Wrote crop report: {report_json_path}")
 
 
