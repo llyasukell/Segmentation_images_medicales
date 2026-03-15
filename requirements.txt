@@ -6,3 +6,5 @@ ipywidgets
 pandas
 jupyter
 ipykernel
+argparse
+nnunetv2

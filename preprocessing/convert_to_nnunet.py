@@ -238,9 +238,19 @@ def main() -> None:
         new_test.append(new_test_rel)
         test_report.append(info)
 
-    out_data = dict(data)
-    out_data["training"] = new_training
-    out_data["test"] = new_test
+    out_data = {
+        "channel_names": {  
+            "0": "MRI"
+        },
+        "labels": {         
+            "background": 0,
+            "heart": 1
+        },
+        "numTraining": len(new_training),
+        "file_ending": ".nii.gz",            
+        "training": new_training,
+        "test": new_test
+    }
 
     output_json_path = args.output_json
     report_json_path = os.path.join(task_dir, args.report_json)
