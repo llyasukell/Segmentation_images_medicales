@@ -9,8 +9,6 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=walid.bouhazza@umontreal.ca
 
-cd $HOME/projects/ift3710
-
 module purge
 module load python/3.12
 
@@ -44,6 +42,5 @@ nnUNetv2_train 2 3d_fullres 2
 nnUNetv2_train 2 3d_fullres 3 
 nnUNetv2_train 2 3d_fullres 4 
  
-
 echo "END : $(date)"
  
