@@ -4,8 +4,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=12
 #SBATCH --mem=8G
-#SBATCH --output=/scratch/$USER/logs/slurm-%j-%x.out 
-#SBATCH --error=/scratch/$USER/logs/slurm-%j-%x.error
+#SBATCH --output=/scratch/%u/logs/slurm-%j-%x.out 
+#SBATCH --error=/scratch/%u/logs/slurm-%j-%x.error
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=walid.bouhazza@umontreal.ca
 
