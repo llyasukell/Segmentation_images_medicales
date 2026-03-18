@@ -6,6 +6,8 @@
 #SBATCH --mem=8G
 #SBATCH --output=/scratch/$USER/logs/slurm-%j-%x.out 
 #SBATCH --error=/scratch/$USER/logs/slurm-%j-%x.error
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=walid.bouhazza@umontreal.ca
 
 cd $HOME/projects/ift3710
 
@@ -33,14 +35,14 @@ python preprocessing/convert_to_nnunet.py \
     --labels-tr-out /scratch/$USER/nnUNet_raw/Dataset002_Heart/labelsTr \
     --images-ts-out /scratch/$USER/nnUNet_raw/Dataset002_Heart/imagesTs \
     --output-json /scratch/$USER/nnUNet_raw/Dataset002_Heart/dataset.json
-    
+
 nnUNetv2_plan_and_preprocess -d 2 --verify_dataset_integrity
  
-nnUNetv2_train 2 3d_fullres 0 --npz
-nnUNetv2_train 2 3d_fullres 1 --npz
-nnUNetv2_train 2 3d_fullres 2 --npz
-nnUNetv2_train 2 3d_fullres 3 --npz
-nnUNetv2_train 2 3d_fullres 4 --npz
+nnUNetv2_train 2 3d_fullres 0 
+nnUNetv2_train 2 3d_fullres 1 
+nnUNetv2_train 2 3d_fullres 2 
+nnUNetv2_train 2 3d_fullres 3 
+nnUNetv2_train 2 3d_fullres 4 
  
 
 echo "END : $(date)"
