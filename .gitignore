@@ -1,17 +1,20 @@
-# Environnements
+#environment 
 .venv/
 __pycache__/
 *.pyc
 .DS_Store
 
-# Data
-data/
-nnunet_data/
 
-nnUNet_raw/
-nnUNet_preprocessed/
-nnUNet_results/
+#heavy data files
+*.nii.gz
+*.pkl
+*.b2nd
+*.pth
 
+#folder
+evaluation
 
-# Jupyter checkpoints
+# notebook checkpoints
 .ipynb_checkpoints/
+
+

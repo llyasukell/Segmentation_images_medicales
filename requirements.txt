@@ -8,3 +8,4 @@ jupyter
 ipykernel
 argparse
 nnunetv2
+scikit-image>=0.19.0

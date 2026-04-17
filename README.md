@@ -1,59 +1,67 @@
-# IFT-3710 – Projet : Segmentation d’images médicales
+# IFT-3710 — 3D Medical Image Segmentation
 
-## Équipe
-- **Mamour Ndiaye** – 20257780  
-- **Haoran Sun** – 20260543  
-- **Walid Bouhazza** – 20280620  
+Binary segmentation of the **left atrium** from MRI scans using [nnU-Net](https://github.com/MIC-DKFZ/nnUNet) on the [Medical Segmentation Decathlon](http://medicaldecathlon.com/) dataset (Task02_Heart / Dataset002_Heart).
 
----
-
-## Description du projet
-Ce projet porte sur le problème de la segmentation d'images médicales 3D, c'est-à-dire la classification des voxels de ces images en différentes catégories. Il propose d'utiliser le Décathlon de segmentation médicale, qui comprend 10 jeux de données d'images issues de différentes modalités, telles que l'imagerie par résonance magnétique (IRM) ou la tomodensitométrie (TDM), provenant de différentes parties du corps humain.
+**Team:** Mamour Ndiaye (20257780) · Haoran Sun (20260543) · Walid Bouhazza (20280620)
 
 ---
 
-## Structure du projet
+## Repository Structure
 
 ```
-project/
-├── preprocessing/          # conversion des données
-│   └── convert_to_nnunet.py
-├── utils/                  # acripts utilitaires réutilisables
-│   └── visualize.ipynb
-├── configs/                # paramètres nnU-Net 
-├── training/               # scripts de lancement des folds
-├── evaluation/             # inférence, Dice, visualisations
-├── results/
-│   ├── figures/            # PNG des visualisations
-│   └── scores.csv          # Scores Dice par cas
-├── report/                 # rapport final
-│   └── IFT3710.html
-└── data/                   # Données brutes (gitignored)
-
+IFT-3710-Projet/
+├── preprocessing/
+│   ├── convert_to_nnunet.py          # Converts raw MRI data → nnU-Net format (manually)
+│   └── nnUNet_preprocessed/          # nnU-Net planning output (plans, fingerprint, fold splits)
+├── training/
+│   ├── nnUnet_train.sh               # SLURM job script for the cluster (full 5-fold run)
+│   ├── train.sh                      # Standalone training script
+│   └── resume.sh                     # Resumes an interrupted training run
+├── analysis/
+│   ├── quantitative_analysis.ipynb   # Dice scores, volumes, FP/FN, morphology, voxel spacing
+│   └── qualitative_analysis.ipynb    # TP/FP/FN overlays per case, interactive 3D render
+├── utils/
+│   └── visualize.ipynb               # Interactive slice viewer (image + label)
+├── evaluation/
+│   └── predictions/                  # Model predictions on unseen data (inferance)
+├── result/
+│   └── nnUNet_results/Dataset002_Heart/
+│       ├── nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres/
+│       │   └── fold_{0..4}/          # Checkpoints, per-fold validation predictions, summary.json
+│       └── nnUNetTrainer_250epochs__nnUNetPlans__3d_fullres/
+│           └── fold_0/               # Longer run (in progress)
+├── configs/                          # Reserved for custom nnU-Net plans/overrides
+├── report/
+│   └── IFT3710.html                  # Final report
+├── data/                             # Raw NIfTI data — gitignored, place here locally
+├── requirements.txt                  # Python dependencies
+└── setup_env.sh                      # Sets the nnU-Net environment variables
 ```
+
+> **Note:** `.pth` checkpoint files are gitignored. Download them from the GitHub Releases page.
 
 ---
 
-# Installation
+## Results
 
-```bash
-pip install -r requirements.txt
-```
+Model: `nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres` — 20 training cases, 5-fold CV.
 
-# Utilisation et Environnement
+| Fold | Mean Dice | Worst case |
+|------|-----------|------------|
+| fold_0 | 0.9357 | la_007 (0.929) |
+| fold_1 | 0.9289 | la_020 (0.896) |
+| fold_2 | 0.9183 | la_019 (0.869) |
+| fold_3 | 0.9385 | la_029 (0.927) |
+| fold_4 | 0.9153 | la_009 (0.879) |
+| **Overall** | **0.9274** | **la_019 (0.869)** |
 
-Pour configurer les variables d'environnement nécessaires à nnU-Net et activer l'environnement :
-## Sur Windows
-Lance le script : setup_env.bat
+Outliers (Dice < 0.90): `la_019`, `la_009`, `la_020`.
 
-## Sur Linux
-Dans le terminal :
-Bash
-export nnUNet_raw="./nnUNet_raw"
-export nnUNet_preprocessed="./nnUNet_preprocessed"
-export nnUNet_results="./nnUNet_results"
+---
 
-## Dans les deux cas pour lancer l'entraînement et créer les données :
-        Exécute la conversion : python preprocessing/convert_to_nnunet.py
-        Lance la normalisation : nnUNetv2_plan_and_preprocess -d 2 --verify_dataset_integrity
-        Lancer l'entraînement : nnUNetv2_train 2 3d_fullres 0
+## Data Notes
+
+- Format: NIfTI (`.nii.gz`), loaded via `nibabel`
+- Labels: `0` = background, `1` = left atrium
+- Raw data is excluded from git — place it in `data/Task02_Heart/` at the repo root
+- Checkpoints (`.pth`) are gitignored — distribute via **GitHub Releases** (`gh release upload`)

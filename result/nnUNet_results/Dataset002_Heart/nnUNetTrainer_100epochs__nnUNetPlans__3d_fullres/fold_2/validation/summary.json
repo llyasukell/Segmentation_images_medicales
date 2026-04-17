@@ -1,0 +1,90 @@
+{
+    "foreground_mean": {
+        "Dice": 0.9183141257602979,
+        "FN": 6020.75,
+        "FP": 3028.75,
+        "IoU": 0.8502300785024437,
+        "TN": 11714284.5,
+        "TP": 52666.0,
+        "n_pred": 55694.75,
+        "n_ref": 58686.75
+    },
+    "mean": {
+        "1": {
+            "Dice": 0.9183141257602979,
+            "FN": 6020.75,
+            "FP": 3028.75,
+            "IoU": 0.8502300785024437,
+            "TN": 11714284.5,
+            "TP": 52666.0,
+            "n_pred": 55694.75,
+            "n_ref": 58686.75
+        }
+    },
+    "metric_per_case": [
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9390200071882113,
+                    "FN": 3589,
+                    "FP": 3537,
+                    "IoU": 0.8850496838301717,
+                    "TN": 12226008,
+                    "TP": 54866,
+                    "n_pred": 58403,
+                    "n_ref": 58455
+                }
+            },
+            "prediction_file": "/workspace/nnUNet_results/Dataset002_Heart/nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres/fold_2/validation/la_011.nii.gz",
+            "reference_file": "/workspace/nnUNet_preprocessed/Dataset002_Heart/gt_segmentations/la_011.nii.gz"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9350853940243118,
+                    "FN": 6416,
+                    "FP": 2155,
+                    "IoU": 0.8780848612434746,
+                    "TN": 12217697,
+                    "TP": 61732,
+                    "n_pred": 63887,
+                    "n_ref": 68148
+                }
+            },
+            "prediction_file": "/workspace/nnUNet_results/Dataset002_Heart/nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres/fold_2/validation/la_014.nii.gz",
+            "reference_file": "/workspace/nnUNet_preprocessed/Dataset002_Heart/gt_segmentations/la_014.nii.gz"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.8689114628989841,
+                    "FN": 12152,
+                    "FP": 559,
+                    "IoU": 0.7682081768117,
+                    "TN": 10185162,
+                    "TP": 42127,
+                    "n_pred": 42686,
+                    "n_ref": 54279
+                }
+            },
+            "prediction_file": "/workspace/nnUNet_results/Dataset002_Heart/nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres/fold_2/validation/la_019.nii.gz",
+            "reference_file": "/workspace/nnUNet_preprocessed/Dataset002_Heart/gt_segmentations/la_019.nii.gz"
+        },
+        {
+            "metrics": {
+                "1": {
+                    "Dice": 0.9302396389296844,
+                    "FN": 1926,
+                    "FP": 5864,
+                    "IoU": 0.8695775921244286,
+                    "TN": 12228271,
+                    "TP": 51939,
+                    "n_pred": 57803,
+                    "n_ref": 53865
+                }
+            },
+            "prediction_file": "/workspace/nnUNet_results/Dataset002_Heart/nnUNetTrainer_100epochs__nnUNetPlans__3d_fullres/fold_2/validation/la_026.nii.gz",
+            "reference_file": "/workspace/nnUNet_preprocessed/Dataset002_Heart/gt_segmentations/la_026.nii.gz"
+        }
+    ]
+}
