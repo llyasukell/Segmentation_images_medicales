@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 export nnUNet_raw="$SCRIPT_DIR/data/nnUNet_raw"
 export nnUNet_preprocessed="$SCRIPT_DIR/preprocessing/nnUNet_preprocessed"
-export nnUNet_results="$SCRIPT_DIR/results/nnUNet_results"
+export nnUNet_results="$SCRIPT_DIR/result/nnUNet_results"
 
 echo "Variables nnU-Net configurées :"
 echo "  nnUNet_raw          = $nnUNet_raw"
