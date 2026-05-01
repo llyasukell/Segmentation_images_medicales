@@ -1,0 +1,26 @@
+[
+  {
+    "case": "la_009",
+    "dice": 0.7882485560552709,
+    "prediction_path": "results/unet_baseline_predictions/fold_3/validation/la_009.nii.gz",
+    "ground_truth_path": "data/heart/Task02_Heart/labelsTr/la_009.nii.gz"
+  },
+  {
+    "case": "la_017",
+    "dice": 0.8555021680534396,
+    "prediction_path": "results/unet_baseline_predictions/fold_3/validation/la_017.nii.gz",
+    "ground_truth_path": "data/heart/Task02_Heart/labelsTr/la_017.nii.gz"
+  },
+  {
+    "case": "la_020",
+    "dice": 0.7346254954574554,
+    "prediction_path": "results/unet_baseline_predictions/fold_3/validation/la_020.nii.gz",
+    "ground_truth_path": "data/heart/Task02_Heart/labelsTr/la_020.nii.gz"
+  },
+  {
+    "case": "la_030",
+    "dice": 0.9109325881942019,
+    "prediction_path": "results/unet_baseline_predictions/fold_3/validation/la_030.nii.gz",
+    "ground_truth_path": "data/heart/Task02_Heart/labelsTr/la_030.nii.gz"
+  }
+]
