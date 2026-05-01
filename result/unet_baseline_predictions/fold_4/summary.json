@@ -1,0 +1,14 @@
+{
+  "fold": 4,
+  "best_dice": 0.8720814203529417,
+  "best_epoch": 78,
+  "num_train_cases": 16,
+  "num_val_cases": 4,
+  "mean_case_dice": 0.8720814203529417,
+  "val_case_ids": [
+    "la_011",
+    "la_014",
+    "la_018",
+    "la_022"
+  ]
+}
