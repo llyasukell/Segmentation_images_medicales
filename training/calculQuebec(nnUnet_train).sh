@@ -12,13 +12,13 @@
 module purge
 module load python/3.12
 
-echo -e "\nSetting up Python environment..."
+
 python -m venv $SLURM_TMPDIR/venv
 source $SLURM_TMPDIR/venv/bin/activate
 
 pip install -r requirements.txt 
 
-echo -e "\nSetting up nnUNet variables..."
+
 export nnUNet_raw="/scratch/$USER/nnUNet_raw"
 export nnUNet_preprocessed="/scratch/$USER/nnUNet_preprocessed"
 export nnUNet_results="/scratch/$USER/nnUNet_results"
